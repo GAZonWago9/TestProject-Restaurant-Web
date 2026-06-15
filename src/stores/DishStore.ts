@@ -25,8 +25,15 @@ export const useDishStore = defineStore('DishStore', {
             },
         ]
     }),
+
     getters: {
-        numberOfDishes: (state): number => state.list.length
+        numberOfDishes: (state): number => state.list.length,
+        
+        getDishById: (state) => {
+            return (editDishId: string): dish => {
+                return state.list.filter((dish: dish) => dish.id === editDishId)[0]
+            }
+        }
     },
     actions: {
         addDish(payload: dish) {
@@ -34,6 +41,12 @@ export const useDishStore = defineStore('DishStore', {
         },
         deleteDish(payload: dish) {
             this.list = this.list.filter(d => d.id !== payload.id)
+        },
+        updateDish(updatedDish: dish) {
+            const index = this.list.findIndex(d => d.id === updatedDish.id)
+            if (index !== -1) {
+                this.list[index] = updatedDish
+            }
         }
     }
 })

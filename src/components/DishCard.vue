@@ -11,6 +11,7 @@ const props = defineProps<PropTypes>()
 
 const emits = defineEmits<{
   (e: 'delete-dish', dish: dish): void
+  (e: 'edit-dish', dish: dish): void
 }>()
 
 const statusColor = computed(() =>{
@@ -25,10 +26,14 @@ const statusColor = computed(() =>{
       return ''
   }
 })
+
+const editDish = () => {
+  emits('edit-dish', props.dish)
+}
   
-const deleteDish = computed(() => {
+const deleteDish = () => {
   emits('delete-dish', props.dish)
-})
+}
 
 </script>
 
@@ -46,6 +51,7 @@ const deleteDish = computed(() => {
           <span class="tag" :class="statusColor">{{ dish.status }}</span>
         </p>
         <div>
+          <button @click="editDish" class="button is-small is-warning is-light">Edit</button>
           <button @click="deleteDish" class="button is-small is-danger is-light">Delete</button>
         </div>
       </div>
